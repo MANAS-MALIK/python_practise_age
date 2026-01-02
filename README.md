@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Voting Eligibility Checker - Step by Step Guide
 
 A simple web application that checks if a person is eligible to vote based on their age.
