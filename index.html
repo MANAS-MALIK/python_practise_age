@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!-- HTML5 document type declaration - tells the browser this is an HTML5 document -->
+<html lang="en">
+<head>
+    <!-- Meta tags provide information about the webpage -->
+    <meta charset="UTF-8">
+    <!-- Sets the character encoding to UTF-8 (supports all characters) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Makes the page responsive on mobile devices -->
+    <title>Voting Eligibility Checker</title>
+    <!-- Title shown in browser tab -->
+    
+    <!-- Internal CSS styling -->
+    <style>
+        /* CSS Reset - removes default browser styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Styles the entire body of the page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Sets the font family */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Creates a gradient background */
+            min-height: 100vh;
+            /* Ensures body takes at least full viewport height */
+            display: flex;
+            /* Enables flexbox layout */
+            justify-content: center;
+            /* Centers content horizontally */
+            align-items: center;
+            /* Centers content vertically */
+            padding: 20px;
+            /* Adds padding around the edges */
+        }
+        
+        /* Styles the main container */
+        .container {
+            background: white;
+            /* White background */
+            padding: 40px;
+            /* Internal spacing */
+            border-radius: 20px;
+            /* Rounded corners */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            /* Adds shadow for depth */
+            max-width: 500px;
+            /* Maximum width of container */
+            width: 100%;
+            /* Takes full width up to max-width */
+        }
+        
+        /* Styles the main heading */
+        h1 {
+            color: #333;
+            /* Dark gray text color */
+            text-align: center;
+            /* Centers the text */
+            margin-bottom: 30px;
+            /* Space below heading */
+            font-size: 2em;
+            /* Makes text larger */
+        }
+        
+        /* Styles the form */
+        .form-group {
+            margin-bottom: 20px;
+            /* Space between form elements */
+        }
+        
+        /* Styles labels */
+        label {
+            display: block;
+            /* Makes label take full width */
+            margin-bottom: 8px;
+            /* Space below label */
+            color: #555;
+            /* Medium gray color */
+            font-weight: 500;
+            /* Makes text slightly bold */
+        }
+        
+        /* Styles the input field */
+        input[type="number"] {
+            width: 100%;
+            /* Takes full width of container */
+            padding: 12px;
+            /* Internal spacing */
+            border: 2px solid #ddd;
+            /* Border around input */
+            border-radius: 8px;
+            /* Rounded corners */
+            font-size: 16px;
+            /* Text size */
+            transition: border-color 0.3s;
+            /* Smooth border color change */
+        }
+        
+        /* Changes border color when input is focused (clicked) */
+        input[type="number"]:focus {
+            outline: none;
+            /* Removes default browser outline */
+            border-color: #667eea;
+            /* Changes border to purple */
+        }
+        
+        /* Styles the submit button */
+        button {
+            width: 100%;
+            /* Takes full width */
+            padding: 14px;
+            /* Internal spacing */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Gradient background */
+            color: white;
+            /* White text */
+            border: none;
+            /* No border */
+            border-radius: 8px;
+            /* Rounded corners */
+            font-size: 18px;
+            /* Text size */
+            font-weight: bold;
+            /* Bold text */
+            cursor: pointer;
+            /* Changes cursor to pointer on hover */
+            transition: transform 0.2s;
+            /* Smooth transform animation */
+        }
+        
+        /* Button effect when hovering */
+        button:hover {
+            transform: translateY(-2px);
+            /* Moves button up slightly */
+        }
+        
+        /* Button effect when clicked */
+        button:active {
+            transform: translateY(0);
+            /* Returns button to original position */
+        }
+        
+        /* Styles the result message area */
+        #result {
+            margin-top: 20px;
+            /* Space above result */
+            padding: 15px;
+            /* Internal spacing */
+            border-radius: 8px;
+            /* Rounded corners */
+            text-align: center;
+            /* Centers text */
+            font-size: 18px;
+            /* Text size */
+            font-weight: 500;
+            /* Slightly bold */
+            display: none;
+            /* Hidden by default */
+        }
+        
+        /* Styles for eligible result */
+        .eligible {
+            background-color: #d4edda;
+            /* Light green background */
+            color: #155724;
+            /* Dark green text */
+            border: 2px solid #c3e6cb;
+            /* Green border */
+        }
+        
+        /* Styles for not eligible result */
+        .not-eligible {
+            background-color: #f8d7da;
+            /* Light red background */
+            color: #721c24;
+            /* Dark red text */
+            border: 2px solid #f5c6cb;
+            /* Red border */
+        }
+        
+        /* Styles for error messages */
+        .error {
+            background-color: #fff3cd;
+            /* Light yellow background */
+            color: #856404;
+            /* Dark yellow text */
+            border: 2px solid #ffeaa7;
+            /* Yellow border */
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container div -->
+    <div class="container">
+        <!-- Main heading -->
+        <h1>🗳️ Voting Eligibility Checker</h1>
+        
+        <!-- Form for age input -->
+        <form id="ageForm">
+            <!-- Form group for age input -->
+            <div class="form-group">
+                <!-- Label for the input field -->
+                <label for="age">Enter your age:</label>
+                <!-- Number input field for age -->
+                <input 
+                    type="number" 
+                    id="age" 
+                    name="age" 
+                    min="0" 
+                    max="150" 
+                    required 
+                    placeholder="Enter your age here"
+                >
+                <!-- 
+                    type="number" - Only allows numbers
+                    id="age" - Unique identifier for JavaScript
+                    name="age" - Name for form submission
+                    min="0" - Minimum value
+                    max="150" - Maximum value
+                    required - Makes field mandatory
+                    placeholder - Hint text shown when empty
+                -->
+            </div>
+            
+            <!-- Submit button -->
+            <button type="submit">Check Eligibility</button>
+            <!-- type="submit" - Submits the form when clicked -->
+        </form>
+        
+        <!-- Result display area (initially hidden) -->
+        <div id="result"></div>
+    </div>
+    
+    <!-- JavaScript code -->
+    <script>
+        // Get references to HTML elements using their IDs
+        // document.getElementById finds an element by its ID attribute
+        const form = document.getElementById('ageForm');
+        const ageInput = document.getElementById('age');
+        const resultDiv = document.getElementById('result');
+        
+        // Add an event listener to the form
+        // When form is submitted, the function will run
+        form.addEventListener('submit', async function(event) {
+            // Prevent the default form submission behavior
+            // This stops the page from refreshing
+            event.preventDefault();
+            
+            // Get the value entered in the age input field
+            // .value gets the current value of the input
+            const age = ageInput.value;
+            
+            // Check if age is empty
+            if (!age) {
+                // Show error message if age is not provided
+                showResult('Please enter your age', 'error');
+                return; // Exit the function early
+            }
+            
+            // Show loading message while waiting for server response
+            showResult('Checking eligibility...', 'error');
+            
+            try {
+                // Send a POST request to the backend server
+                // fetch() is a modern way to make HTTP requests
+                const response = await fetch('/check_eligibility', {
+                    method: 'POST', // HTTP method
+                    headers: {
+                        'Content-Type': 'application/json' // Tell server we're sending JSON
+                    },
+                    body: JSON.stringify({ age: age }) // Convert data to JSON string
+                    // JSON.stringify converts JavaScript object to JSON string
+                });
+                
+                // Parse the JSON response from the server
+                // await waits for the response to arrive
+                // .json() converts the response text to a JavaScript object
+                const data = await response.json();
+                
+                // Check if the request was successful
+                if (data.success) {
+                    // If eligible, show success message with eligible styling
+                    if (data.eligible) {
+                        showResult(data.message, 'eligible');
+                    } else {
+                        // If not eligible, show message with not-eligible styling
+                        showResult(data.message, 'not-eligible');
+                    }
+                } else {
+                    // If server returned an error, show error message
+                    showResult(data.message, 'error');
+                }
+            } catch (error) {
+                // If something goes wrong (network error, etc.), show error message
+                showResult('Error connecting to server. Please try again.', 'error');
+                console.error('Error:', error); // Log error to browser console for debugging
+            }
+        });
+        
+        // Function to display the result message
+        function showResult(message, className) {
+            // Set the text content of the result div
+            resultDiv.textContent = message;
+            
+            // Remove all existing classes
+            resultDiv.className = '';
+            
+            // Add the appropriate class (eligible, not-eligible, or error)
+            resultDiv.classList.add(className);
+            
+            // Make the result div visible
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+
